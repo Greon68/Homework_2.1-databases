@@ -28,6 +28,25 @@ def show_product(request, slug):
     context = {'phone':phone}
     return render(request, template, context)
 
+# Дополнение преподователя:
+# " Обратите внимание. Менять порядок отображения товаров
+# в каталоге можно более простым способом" :
+
+def show_catalog_2(request):
+    SORT_MAP = {
+    'name': 'name',
+    'min_price': 'price',
+    'max_price': '-price',
+    }
+    phones = Phone.objects.all()
+    template = 'catalog.html'
+    sort = request.GET.get('sort')
+    if sort:
+        phones = phones.order_by(SORT_MAP[sort])
+    context = {'phones': phones}
+    return render(request, template, context)
+
+
 
 
 
